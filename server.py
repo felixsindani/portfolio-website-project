@@ -8,5 +8,5 @@ def home():
 	return render_template("templates/home.html")
 
 if __name__ == "__main__":
-	app.run()
+	app.run('host=host, port = port')
 
