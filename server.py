@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 @app.route("/home/")
 def home():
-	return render_template("templates/home.html")
+	return render_template("home.html")
 
 if __name__ == "__main__":
-	app.run('host=host, port = port')
+	app.run()
 
