@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sets up my web servers for the deployment of web_static
+# sets up my web servers for the deployment of static
 set -e
 echo -e "\e[1;32m START\e[0m"
 
@@ -10,23 +10,23 @@ echo -e "\e[1;32m Packages updated\e[0m"
 echo
 
 #--create the directories
-sudo mkdir -p /data/web_static/{releases/test,shared}
-sudo chmod -R 755 /data/web_static/releases/test
+sudo mkdir -p /data/static/{releases/test,shared}
+sudo chmod -R 755 /data/static/releases/test
 
 
 echo -e "\e[1;32m directories created\e[0m"
 echo
 
 #--adds test string
-echo "<h1>Welcome to Holberton school </h1>" > sudo /data/web_static/releases/test/index.html
+echo "<h1>Welcome to Holberton school </h1>" > sudo /data/static/releases/test/index.html
 echo -e "\e[1;32m Test String added\e[0m"
 echo
 
 # Remove the symbolic link if it already exists
-sudo rm -f /data/web_static/current
+sudo rm -f /data/static/current
 
 # Create a new symbolic link
-sudo ln -s /data/web_static/releases/test/ /data/web_static/current
+sudo ln -s /data/static/releases/test/ /data/static/current
 sudo chown -R ubuntu:ubuntu /data
 
 # Configure Nginx
@@ -46,7 +46,7 @@ server {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
     location /hbnb_static {
-        alias /data/web_static/current/;
+        alias /data/static/current/;
     }
 
     error_page 404 /404.html;

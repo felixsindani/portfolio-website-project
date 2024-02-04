@@ -11,7 +11,7 @@ env.hosts = ["18.235.233.229", "54.236.47.100"]
 
 
 def do_pack():
-    """Create a tar gzipped archive of the directory web_static."""
+    """Create a tar gzipped archive of the directory static."""
     dt = datetime.utcnow()
     file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
                                                          dt.month,
@@ -22,7 +22,7 @@ def do_pack():
     if os.path.isdir("versions") is False:
         if local("mkdir -p versions").failed is True:
             return None
-    if local("tar -cvzf {} web_static".format(file)).failed is True:
+    if local("tar -cvzf {} static".format(file)).failed is True:
         return None
     return file
 
@@ -43,26 +43,26 @@ def do_deploy(archive_path):
 
     if put(archive_path, "/tmp/{}".format(file)).failed is True:
         return False
-    if run("rm -rf /data/web_static/releases/{}/".
+    if run("rm -rf /data/static/releases/{}/".
            format(name)).failed is True:
         return False
-    if run("mkdir -p /data/web_static/releases/{}/".
+    if run("mkdir -p /data/static/releases/{}/".
            format(name)).failed is True:
         return False
-    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
+    if run("tar -xzf /tmp/{} -C /data/static/releases/{}/".
            format(file, name)).failed is True:
         return False
     if run("rm /tmp/{}".format(file)).failed is True:
         return False
-    if run("mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/".format(name, name)).failed is True:
+    if run("mv /data/static/releases/{}/static/* "
+           "/data/static/releases/{}/".format(name, name)).failed is True:
         return False
-    if run("rm -rf /data/web_static/releases/{}/web_static".
+    if run("rm -rf /data/static/releases/{}/static".
            format(name)).failed is True:
         return False
-    if run("rm -rf /data/web_static/current").failed is True:
+    if run("rm -rf /data/static/current").failed is True:
         return False
-    if run("ln -s /data/web_static/releases/{}/ /data/web_static/current".
+    if run("ln -s /data/static/releases/{}/ /data/static/current".
            format(name)).failed is True:
         return False
     return True
